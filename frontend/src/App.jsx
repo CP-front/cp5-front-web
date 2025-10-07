@@ -11,21 +11,23 @@ import Sobre from './routes/Sobre'
 function App() {
   return (
     <BrowserRouter>
-      {/* Navbar fixa no topo */}
-      <Header/>
+      <AuthProvider>
+        {/* Navbar fixa no topo */}
+        <Header/>
 
-      {/* Conteúdo principal (as páginas) */}
-      <div className="min-h-screen bg-[#f2f2f2]">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/planos" element={<Planos />} />
-          <Route path="/sobre" element={<Sobre />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-      </div>
+        {/* Conteúdo principal (as páginas) */}
+        <div className="min-h-screen bg-[#f2f2f2]">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/planos" element={<Planos />} />
+            <Route path="/sobre" element={<Sobre />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </div>
 
-      {/* Footer fixo no final */}
-      <Footer />
+        {/* Footer fixo no final */}
+        <Footer />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
