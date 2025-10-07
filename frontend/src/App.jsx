@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from './components/AuthContext';
 import Error from './routes/Error'
-import Nav from './components/Nav'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './routes/Home'
 import Planos from './routes/Planos'
 import Sobre from './routes/Sobre'
+import Treinos from './routes/Treinos';
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/planos" element={<Planos/>} />
+            <Route path="/treinos"element={<Treinos/>}/>
             <Route path="/sobre" element={<Sobre/>} />
             <Route path="*" element={<Error/>} />
           </Routes>
