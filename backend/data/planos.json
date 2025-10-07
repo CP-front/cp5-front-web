@@ -1,0 +1,40 @@
+[
+    {
+      "id": "1",
+      "nome": "Plano Básico",
+      "preco": 89.9,
+      "descricao": "Ideal para quem está começando",
+      "beneficios": ["Acesso à área de musculação", "Vestiário completo", "Avaliação física inicial", "App de treinos"],
+      "destaque": false
+    },
+    {
+      "id": "2",
+      "nome": "Plano Premium",
+      "preco": 149.9,
+      "descricao": "O mais popular entre nossos alunos",
+      "beneficios": [
+        "Tudo do Plano Básico",
+        "Aulas coletivas ilimitadas",
+        "Treino personalizado mensal",
+        "Acesso a todas as unidades",
+        "Nutricionista online"
+      ],
+      "destaque": true
+    },
+    {
+      "id": "3",
+      "nome": "Plano Black",
+      "preco": 249.9,
+      "descricao": "Experiência completa e exclusiva",
+      "beneficios": [
+        "Tudo do Plano Premium",
+        "Personal trainer 2x por semana",
+        "Acompanhamento nutricional presencial",
+        "Acesso VIP e horários exclusivos",
+        "Massagem relaxante mensal",
+        "Área de descanso premium"
+      ],
+      "destaque": false
+    }
+  ]
+  
