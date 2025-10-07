@@ -1,8 +1,8 @@
-<<<<<<< HEAD
-=======
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { AuthProvider } from './components/AuthContext';
 import Error from './routes/Error'
 import Nav from './components/Nav'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './routes/Home'
 import Planos from './routes/Planos'
@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       {/* Navbar fixa no topo */}
-      <Nav />
+      <Header/>
 
       {/* Conteúdo principal (as páginas) */}
       <div className="min-h-screen bg-[#f2f2f2]">
@@ -31,4 +31,3 @@ function App() {
 }
 
 export default App
->>>>>>> 5783c6fcf1ae3f5d8c1dede35870b6545c2471ea
