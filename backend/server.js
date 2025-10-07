@@ -3,8 +3,8 @@ import cors from "cors"
 import dotenv from "dotenv"
 import authRoutes from "./routes/auth.js"
 import planosRoutes from "./routes/planos.js"
-import treinosRoutes from "./routes/treinos.js"
-import contatoRoutes from "./routes/contato.js"
+// import treinosRoutes from "./routes/treinos.js"
+// import contatoRoutes from "./routes/contato.js"
 
 dotenv.config()
 
@@ -18,8 +18,8 @@ app.use(express.json())
 // Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/planos", planosRoutes)
-app.use("/api/treinos", treinosRoutes)
-app.use("/api/contato", contatoRoutes)
+// app.use("/api/treinos", treinosRoutes)
+// app.use("/api/contato", contatoRoutes)
 
 // Health check
 app.get("/api/health", (req, res) => {
