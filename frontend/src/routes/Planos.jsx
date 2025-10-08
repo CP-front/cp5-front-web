@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 // Supondo que seu 'api' utilitário esteja configurado
-import api from "../utils/api" 
+import api from "../utils/api"
 
 // Componente para o item do FAQ, para manter o JSX principal mais limpo
 const FaqItem = ({ question, answer }) => (
@@ -83,10 +83,10 @@ const Planos = () => {
                                 <div
                                     key={plano.id}
                                     className={`bg-gray-900 rounded-2xl p-8 flex flex-col h-full border transition-all duration-300
-                                    ${plano.destaque 
-                                        ? "border-orange-500 border-2 scale-105 shadow-2xl shadow-orange-500/20 relative" 
-                                        : "border-gray-800 hover:border-orange-500/50 hover:-translate-y-2"
-                                    }`}
+                                    ${plano.destaque
+                                            ? "border-orange-500 border-2 scale-105 shadow-2xl shadow-orange-500/20 relative"
+                                            : "border-gray-800 hover:border-orange-500/50 hover:-translate-y-2"
+                                        }`}
                                 >
                                     {plano.destaque && (
                                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-6 py-1 rounded-full text-sm font-bold tracking-wider">
@@ -118,9 +118,9 @@ const Planos = () => {
                                     </ul>
 
                                     <button className={
-                                        plano.destaque 
-                                        ? "w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105" 
-                                        : "w-full border-2 border-orange-500 text-orange-500 font-bold py-3 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
+                                        plano.destaque
+                                            ? "w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105"
+                                            : "w-full border-2 border-orange-500 text-orange-500 font-bold py-3 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
                                     }>
                                         Escolher Plano
                                     </button>
@@ -128,7 +128,7 @@ const Planos = () => {
                             ))
                         ) : (
                             <div className="lg:col-span-3 text-center text-gray-400 py-16">
-                                <p className="text-xl">Nenhum plano disponível no momento. <br/> Por favor, volte mais tarde.</p>
+                                <p className="text-xl">Nenhum plano disponível no momento. <br /> Por favor, volte mais tarde.</p>
                             </div>
                         )}
                     </div>
@@ -157,7 +157,7 @@ const Planos = () => {
                     <div className="bg-gray-900 border-2 border-orange-500/30 rounded-2xl text-center max-w-3xl mx-auto p-12 shadow-lg shadow-orange-500/10">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4">Ainda tem dúvidas?</h2>
                         <p className="text-gray-300 mb-8 text-lg">Nossa equipe está pronta para te ajudar a escolher o melhor plano para sua jornada.</p>
-                        <a href="#contato" className="bg-orange-500 text-white font-bold text-lg px-10 py-3 inline-block rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105">
+                        <a href="/sobre" className="bg-orange-500 text-white font-bold text-lg px-10 py-3 inline-block rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105">
                             Falar com Consultor
                         </a>
                     </div>

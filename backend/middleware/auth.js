@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 
+// A palavra-chave 'export' é crucial aqui.
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"]
   const token = authHeader && authHeader.split(" ")[1]
@@ -16,3 +17,4 @@ export const authenticateToken = (req, res, next) => {
     return res.status(403).json({ error: "Token inválido ou expirado" })
   }
 }
+

@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+// ALTERAÇÃO: Importei o seu `api.js` configurado para garantir que a baseURL está correta.
+import api from "../utils/api"; 
 
 const AuthContext = createContext();
 
@@ -28,11 +29,11 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async (token) => {
     try {
-      const response = await axios.get("/api/auth/verify", {
+      // Usando a instância `api`
+      const response = await api.get("/auth/verify", {
         headers: { Authorization: `Bearer ${token}` },
       })
       setUser(response.data.user)
-    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       localStorage.removeItem("token")
     } finally {
@@ -42,7 +43,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, senha) => {
     try {
-      const response = await axios.post("/api/auth/login", { email, senha })
+      // Usando a instância `api`
+      const response = await api.post("/auth/login", { email, senha })
       localStorage.setItem("token", response.data.token)
       setUser(response.data.user)
       return { success: true }
@@ -56,7 +58,9 @@ export const AuthProvider = ({ children }) => {
 
   const cadastro = async (nome, email, senha) => {
     try {
-      const response = await axios.post("/api/auth/cadastro", { nome, email, senha })
+      // ALTERAÇÃO AQUI: Mudei a rota de "/api/auth/cadastro" para "/auth/register".
+      // E agora usando a instância `api` que já tem a baseURL configurada.
+      const response = await api.post("/auth/register", { nome, email, senha })
       localStorage.setItem("token", response.data.token)
       setUser(response.data.user)
       return { success: true }

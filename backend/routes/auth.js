@@ -5,119 +5,79 @@ import { readJSON, writeJSON } from "../utils/fileHandler.js"
 
 const router = express.Router()
 
-// Cadastro
-router.post("/cadastro", async (req, res) => {
+// ROTA DE REGISTO: POST /api/auth/register
+router.post("/register", async (req, res) => {
   try {
     const { nome, email, senha } = req.body
-
     if (!nome || !email || !senha) {
       return res.status(400).json({ error: "Todos os campos são obrigatórios" })
     }
 
-    const users = await readJSON("users.json")
-
-    const userExists = users.find((u) => u.email === email)
-    if (userExists) {
-      return res.status(400).json({ error: "Email já cadastrado" })
+    const usuarios = await readJSON("usuario.json")
+    const emailExists = usuarios.find((user) => user.email === email)
+    if (emailExists) {
+      return res.status(400).json({ error: "Este email já está em uso" })
     }
 
-    const hashedPassword = await bcrypt.hash(senha, 10)
+    const salt = await bcrypt.genSalt(10)
+    const senhaHash = await bcrypt.hash(senha, salt)
 
     const newUser = {
       id: Date.now().toString(),
       nome,
       email,
-      senha: hashedPassword,
-      criadoEm: new Date().toISOString(),
+      senha: senhaHash,
     }
 
-    users.push(newUser)
-    await writeJSON("users.json", users)
+    usuarios.push(newUser)
+    await writeJSON("usuario.json", usuarios)
 
-    const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+    const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
+      expiresIn: "8h",
     })
 
     res.status(201).json({
-      message: "Usuário cadastrado com sucesso",
+      message: "Utilizador criado com sucesso",
       token,
-      user: {
-        id: newUser.id,
-        nome: newUser.nome,
-        email: newUser.email,
-      },
+      user: { id: newUser.id, nome: newUser.nome, email: newUser.email },
     })
   } catch (error) {
-    res.status(500).json({ error: "Erro ao cadastrar usuário" })
+    console.error("ERRO NO REGISTO:", error)
+    res.status(500).json({ error: "Erro interno do servidor ao registar" })
   }
 })
 
-// Login
+// ROTA DE LOGIN: POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
     const { email, senha } = req.body
-
     if (!email || !senha) {
       return res.status(400).json({ error: "Email e senha são obrigatórios" })
     }
 
-    const users = await readJSON("users.json")
-    const user = users.find((u) => u.email === email)
-
+    const usuarios = await readJSON("usuario.json")
+    const user = usuarios.find((u) => u.email === email)
     if (!user) {
+      return res.status(404).json({ error: "Utilizador não encontrado" })
+    }
+
+    const isMatch = await bcrypt.compare(senha, user.senha)
+    if (!isMatch) {
       return res.status(401).json({ error: "Credenciais inválidas" })
     }
 
-    const isValidPassword = await bcrypt.compare(senha, user.senha)
-    if (!isValidPassword) {
-      return res.status(401).json({ error: "Credenciais inválidas" })
-    }
-
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "8h",
     })
 
     res.json({
-      message: "Login realizado com sucesso",
+      message: "Login bem-sucedido",
       token,
-      user: {
-        id: user.id,
-        nome: user.nome,
-        email: user.email,
-      },
+      user: { id: user.id, nome: user.nome, email: user.email },
     })
   } catch (error) {
-    res.status(500).json({ error: "Erro ao fazer login" })
-  }
-})
-
-// Verificar token
-router.get("/verify", async (req, res) => {
-  const authHeader = req.headers["authorization"]
-  const token = authHeader && authHeader.split(" ")[1]
-
-  if (!token) {
-    return res.status(401).json({ error: "Token não fornecido" })
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const users = await readJSON("users.json")
-    const user = users.find((u) => u.id === decoded.id)
-
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" })
-    }
-
-    res.json({
-      user: {
-        id: user.id,
-        nome: user.nome,
-        email: user.email,
-      },
-    })
-  } catch (error) {
-    res.status(403).json({ error: "Token inválido" })
+    console.error("ERRO NO LOGIN:", error)
+    res.status(500).json({ error: "Erro interno do servidor ao fazer login" })
   }
 })
 

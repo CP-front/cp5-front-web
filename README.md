@@ -5,4 +5,3 @@ Rodrigo Cardoso Tadeo - 562010<br>
 Vinicius Cavalcanti dos Reis - 562063
 
 ### Link do repositório: <code>https://github.com/CP-front/cp5-front-web</code>
-### Link do projeto na Vercel: <code></code>
