@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import React from 'react'
+import Confuso from '../assets/confuso.jpg';
+
 
 const Error = () => {
   // Definindo as classes dos botões para manter a consistência
