@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import api from "../utils/api" // Supondo que seu 'api' utilitário esteja configurado
-import Academia from '../assets/academia.jpg';
+import Academia from '../assets/academia.jpg'
+import Academia2 from '../assets/academia2.jpg'
+import Academia3 from '../assets/academia3.jpg'
 
-// Componente para os cards de valores para limpar o JSX
+// Componente para os cards de valores
 const ValueCard = ({ icon, title, description }) => (
   <div className="bg-gray-900 p-8 rounded-xl border border-gray-800 text-center group hover:-translate-y-2 transition-transform duration-300">
     <div className="w-16 h-16 bg-orange-500/10 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
@@ -30,7 +32,6 @@ const ContactInfoCard = ({ icon, title, children }) => (
   </div>
 );
 
-
 const Sobre = () => {
   const [formData, setFormData] = useState({
     nome: "",
@@ -40,6 +41,15 @@ const Sobre = () => {
   })
   const [status, setStatus] = useState({ type: "", message: "" })
   const [loading, setLoading] = useState(false)
+
+  // --- NOVO: controle do slideshow de imagens ---
+  const [imageIndex, setImageIndex] = useState(0)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIndex((prev) => (prev === 0 ? 1 : 0))
+    }, 10000) // alterna a cada 10s
+    return () => clearInterval(interval)
+  }, [])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -88,15 +98,41 @@ const Sobre = () => {
       <section className="py-20">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div>
-              <img src={Academia} alt="Interior da Academia Falcões" className="rounded-2xl shadow-lg shadow-orange-500/10" />
+            
+            {/* Slideshow automático */}
+            <div className="relative w-full h-[400px] flex justify-center items-center">
+              <img
+                src={Academia}
+                alt="Interior da Academia Falcões"
+                className={`absolute w-full h-full object-cover rounded-2xl shadow-lg shadow-orange-500/10 transition-opacity duration-1000 ${imageIndex === 0 ? "opacity-100" : "opacity-0"}`}
+              />
+              <img
+                src={Academia2}
+                alt="Treinamento na Academia Falcões"
+                className={`absolute w-full h-full object-cover rounded-2xl shadow-lg shadow-orange-500/10 transition-opacity duration-1000 ${imageIndex === 1 ? "opacity-100" : "opacity-0"}`}
+              />
+              <img
+                src={Academia3}
+                alt="Treinamento na Academia Falcões"
+                className={`absolute w-full h-full object-cover rounded-2xl shadow-lg shadow-orange-500/10 transition-opacity duration-1000 ${imageIndex === 1 ? "opacity-100" : "opacity-0"}`}
+              />
             </div>
+
+            {/* Texto */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-orange-400 text-transparent bg-clip-text">Nossa História</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-orange-400 text-transparent bg-clip-text">
+                CONHEÇA NOSSA HISTÓRIA
+              </h2>
               <div className="space-y-4 text-gray-300 leading-relaxed">
-                <p>Fundada em 2010, a Academia Falcões nasceu com o propósito de revolucionar o conceito de fitness. Combinamos tecnologia de ponta com a expertise de profissionais altamente qualificados para criar um ecossistema de saúde e bem-estar.</p>
-                <p>Nossa missão é proporcionar uma experiência de treinamento única, onde cada aluno recebe atenção personalizada e um plano adaptado aos seus objetivos, garantindo resultados reais e sustentáveis.</p>
-                <p>Com mais de 5.000 alunos ativos, nos orgulhamos de fazer parte da jornada de transformação de cada pessoa que confia em nosso trabalho.</p>
+                <p>
+                  Fundada em 2010, a Academia Falcões nasceu com o propósito de revolucionar o conceito de fitness. Combinamos tecnologia de ponta com a expertise de profissionais altamente qualificados para criar um ecossistema de saúde e bem-estar.
+                </p>
+                <p>
+                  Nossa missão é proporcionar uma experiência de treinamento única, onde cada aluno recebe atenção personalizada e um plano adaptado aos seus objetivos, garantindo resultados reais e sustentáveis.
+                </p>
+                <p>
+                  Com mais de 5.000 alunos ativos, nos orgulhamos de fazer parte da jornada de transformação de cada pessoa que confia em nosso trabalho.
+                </p>
               </div>
             </div>
           </div>
