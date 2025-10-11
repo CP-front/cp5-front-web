@@ -1,26 +1,24 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useAuth } from "./AuthContext" // Supondo que seu AuthContext esteja neste caminho
+import { useAuth } from "./AuthContext"
 
-const AuthModal = ({ isOpen, onClose }) => {
-  const [isLogin, setIsLogin] = useState(true)
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    confirmarSenha: "",
-  })
+const AuthModal = ({ isOpen, onClose, initialMode = "login" }) => {
+  // Renomeado para 'initialMode' para maior clareza
+  const [isLogin, setIsLogin] = useState(initialMode === "login")
+  const [formData, setFormData] = useState({ nome: "", email: "", senha: "", confirmarSenha: "" })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-
   const { login, cadastro } = useAuth()
 
-  // Reseta o formulário quando o modal é fechado ou o modo é trocado
+  // Reseta o formulário e define o modo correto sempre que o modal for aberto
   useEffect(() => {
-    setError("")
-    setFormData({ nome: "", email: "", senha: "", confirmarSenha: "" })
-  }, [isOpen, isLogin])
+    if (isOpen) {
+      setIsLogin(initialMode === "login")
+      setError("")
+      setFormData({ nome: "", email: "", senha: "", confirmarSenha: "" })
+    }
+  }, [isOpen, initialMode])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -41,7 +39,7 @@ const AuthModal = ({ isOpen, onClose }) => {
     try {
       const result = isLogin
         ? await login(formData.email, formData.senha)
-        : await cadastro(formData.nome, formData.email, formData.senha)
+        : await cadastro(formData.nome, formData.email, formData.senha);
 
       if (result.success) {
         onClose()
@@ -61,15 +59,12 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null
 
-  // Estilos reutilizáveis para os inputs e botão
+  // Classes de estilo reutilizáveis para manter a consistência
   const inputClasses = "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
   const buttonClasses = "w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 disabled:bg-orange-800 disabled:cursor-not-allowed flex items-center justify-center"
 
   return (
-    <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div
         className="bg-gray-900 rounded-2xl max-w-md w-full border border-gray-800 shadow-2xl shadow-orange-500/10 overflow-hidden animate-fade-in-down"
         onClick={(e) => e.stopPropagation()}
@@ -83,14 +78,8 @@ const AuthModal = ({ isOpen, onClose }) => {
                 {isLogin ? "Faça login para continuar" : "Crie sua conta gratuitamente"}
               </p>
             </div>
-            <button
-              onClick={onClose}
-              className="w-10 h-10 bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white rounded-full flex items-center justify-center transition-colors"
-              aria-label="Fechar modal"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+            <button onClick={onClose} className="w-10 h-10 bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white rounded-full flex items-center justify-center transition-colors" aria-label="Fechar modal">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
         </div>
@@ -154,3 +143,4 @@ const AuthModal = ({ isOpen, onClose }) => {
 }
 
 export default AuthModal
+

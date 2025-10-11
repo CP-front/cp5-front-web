@@ -2,13 +2,13 @@
 
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-// Supondo que você tenha estes componentes criados
 import { useAuth } from "./AuthContext"
 import AuthModal from "./AuthModal"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [authModalMode, setAuthModalMode] = useState("login")
   const location = useLocation()
   const { user, logout } = useAuth()
 
@@ -21,26 +21,35 @@ const Header = () => {
 
   const isActive = (path) => location.pathname === path
 
-  // Definição das classes dos botões para reutilização
-  const primaryButtonClasses = "bg-orange-500 text-white font-semibold px-6 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105"
-  const secondaryButtonClasses = "border border-orange-500 text-orange-500 font-semibold text-sm px-6 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
+  const openLoginModal = () => {
+    setAuthModalMode("login")
+    setShowAuthModal(true)
+  }
+
+  const openCadastroModal = () => {
+    setAuthModalMode("cadastro")
+    setShowAuthModal(true)
+  }
+
+  // Definição das classes dos botões para reutilização e consistência
+  const primaryButtonClasses = "bg-orange-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105"
+  const secondaryButtonClasses = "border-2 border-orange-500 text-orange-500 font-bold px-6 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
 
   return (
     <>
+      {/* Fundo com efeito de vidro, fixo no topo */}
       <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-800">
         <nav className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              {/* Ícone do Logo */}
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2L3 7v10c0 5.5 3.8 10 9 11.5 5.2-1.5 9-6 9-11.5V7L12 2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 17.75a5.75 5.75 0 100-11.5 5.75 5.75 0 000 11.5z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12h.01" />
-                </svg>
+              <div className="w-12 h-12 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-removebg-preview-removebg-preview-8LgfCLmxkj5SlZzfPd2COuiZ4DB78B.png"
+                  alt="Falcões Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              {/* Nome da Marca */}
               <div>
                 <h1 className="text-2xl font-bold text-white">
                   Falcões<span className="text-orange-500">.</span>
@@ -59,7 +68,6 @@ const Header = () => {
                     }`}
                 >
                   {link.name}
-                  {/* Animação da linha inferior */}
                   <span
                     className={`absolute -bottom-2 left-0 w-full h-0.5 bg-orange-500 transform origin-left transition-transform duration-300 ${isActive(link.path) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
@@ -78,9 +86,15 @@ const Header = () => {
                   </button>
                 </div>
               ) : (
-                <button onClick={() => setShowAuthModal(true)} className={primaryButtonClasses}>
-                  Entrar
-                </button>
+                <>
+                  {/* Botões com estilos consistentes */}
+                  <button onClick={openCadastroModal} className="font-semibold text-gray-300 hover:text-orange-500 transition-colors">
+                    Cadastre-se
+                  </button>
+                  <button onClick={openLoginModal} className={primaryButtonClasses}>
+                    Entrar
+                  </button>
+                </>
               )}
             </div>
 
@@ -91,6 +105,7 @@ const Header = () => {
               aria-label="Menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {/* Ícone corrigido para 'X' quando o menu está aberto */}
                 {isMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
@@ -124,15 +139,20 @@ const Header = () => {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    onClick={() => {
-                      setShowAuthModal(true)
-                      setIsMenuOpen(false)
-                    }}
-                    className={`${primaryButtonClasses} w-full`}
-                  >
-                    Entrar
-                  </button>
+                  <div className="w-full flex flex-col gap-4">
+                    <button
+                      onClick={() => { openLoginModal(); setIsMenuOpen(false); }}
+                      className={`${primaryButtonClasses} w-full`}
+                    >
+                      Entrar
+                    </button>
+                    <button
+                      onClick={() => { openCadastroModal(); setIsMenuOpen(false); }}
+                      className="w-full font-semibold text-gray-300 hover:text-orange-500 transition-colors py-2"
+                    >
+                      Criar Conta
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -140,7 +160,7 @@ const Header = () => {
         </nav>
       </header>
 
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} initialMode={authModalMode} />
     </>
   )
 }

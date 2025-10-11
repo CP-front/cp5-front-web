@@ -1,15 +1,14 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from "react";
-// ALTERAÇÃO: Importei o seu `api.js` configurado para garantir que a baseURL está correta.
-import api from "../utils/api"; 
+import api from "../utils/api"; // Garante que estamos a usar a nossa API configurada
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (!context) {
-    throw new Error("useAuth deve ser usado dentro de AuthProvider")
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider")
   }
   return context
 }
@@ -29,13 +28,15 @@ export const AuthProvider = ({ children }) => {
 
   const verifyToken = async (token) => {
     try {
-      // Usando a instância `api`
+      // Usando a instância 'api' e a rota correta
       const response = await api.get("/auth/verify", {
         headers: { Authorization: `Bearer ${token}` },
       })
       setUser(response.data.user)
     } catch (error) {
+      // Se a verificação falhar, limpamos o token inválido
       localStorage.removeItem("token")
+      setUser(null)
     } finally {
       setLoading(false)
     }
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, senha) => {
     try {
-      // Usando a instância `api`
+      // Usando a instância 'api' e a rota correta
       const response = await api.post("/auth/login", { email, senha })
       localStorage.setItem("token", response.data.token)
       setUser(response.data.user)
@@ -58,8 +59,7 @@ export const AuthProvider = ({ children }) => {
 
   const cadastro = async (nome, email, senha) => {
     try {
-      // ALTERAÇÃO AQUI: Mudei a rota de "/api/auth/cadastro" para "/auth/register".
-      // E agora usando a instância `api` que já tem a baseURL configurada.
+      // Usando a instância 'api' e a rota correta
       const response = await api.post("/auth/register", { nome, email, senha })
       localStorage.setItem("token", response.data.token)
       setUser(response.data.user)
@@ -77,7 +77,11 @@ export const AuthProvider = ({ children }) => {
     setUser(null)
   }
 
-  return <AuthContext.Provider value={{ user, loading, login, cadastro, logout }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, loading, login, cadastro, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export default AuthContext

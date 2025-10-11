@@ -46,20 +46,5 @@
       "Abdominal bicicleta - 3x20"
     ],
     "imagem": "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dHJlaW5vJTIwZnVuY2lvbmFsfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500"
-  },
-  {
-    "id": "1760152567192",
-    "nome": "push pull legs",
-    "categoria": "Musculação",
-    "nivel": "Intermediário",
-    "duracao": "60 min",
-    "descricao": "treino muito bom para comer umas putinhas bem ali",
-    "exercicios": [
-      "umbru",
-      "hike",
-      "abibas",
-      "jok"
-    ],
-    "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/bb/El_Chavo_Roberto_Bola%C3%B1os.png"
   }
 ]

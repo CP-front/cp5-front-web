@@ -25,9 +25,10 @@ const Footer = () => {
           {/* Coluna 1: Logo, Descrição e Redes Sociais */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
                 {/* Usando o mesmo ícone do Header para consistência */}
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-removebg-preview-removebg-preview-8LgfCLmxkj5SlZzfPd2COuiZ4DB78B.png" alt="" />
+                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">~
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2L3 7v10c0 5.5 3.8 10 9 11.5 5.2-1.5 9-6 9-11.5V7L12 2z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 17.75a5.75 5.75 0 100-11.5 5.75 5.75 0 000 11.5z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12h.01" />
