@@ -118,7 +118,7 @@ const Treinos = () => {
       <section className="py-4 sticky top-[72px] z-40 bg-black/80 backdrop-blur-sm border-y border-gray-800">
         <div className="container mx-auto px-6"><div className="flex flex-wrap gap-3 justify-center">
           {categorias.map((categoria) => (
-            <button key={categoria} onClick={() => setFiltroCategoria(categoria)} className={`px-5 py-2 rounded-full font-semibold text-sm transition-all duration-300 ${filtroCategoria === categoria ? "bg-orange-500 text-white shadow-md shadow-orange-500/20" : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"}`}>
+            <button key={categoria} onClick={() => setFiltroCategoria(categoria)} className={`px-5 py-2 rounded-full font-semibold text-sm transition-all duration-300 ${filtroCategoria === categoria ? "bg-orange-500 text-white shadow-md shadow-orange-500/20" : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer"}`}>
               {categoria}
             </button>
           ))}

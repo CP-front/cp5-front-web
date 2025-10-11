@@ -119,8 +119,8 @@ const Planos = () => {
 
                                     <button className={
                                         plano.destaque
-                                            ? "w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105"
-                                            : "w-full border-2 border-orange-500 text-orange-500 font-bold py-3 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
+                                            ? "w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                                            : "w-full border-2 border-orange-500 text-orange-500 font-bold py-3 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300 cursor-pointer"
                                     }>
                                         Escolher Plano
                                     </button>

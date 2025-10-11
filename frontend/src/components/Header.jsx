@@ -32,8 +32,8 @@ const Header = () => {
   }
 
   // Definição das classes dos botões para reutilização e consistência
-  const primaryButtonClasses = "bg-orange-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105"
-  const secondaryButtonClasses = "border-2 border-orange-500 text-orange-500 font-bold px-6 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300"
+  const primaryButtonClasses = "bg-orange-500 text-white font-bold px-6 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 cursor-pointer"
+  const secondaryButtonClasses = "border-2 border-orange-500 text-orange-500 font-bold px-6 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-300 cursor-pointer"
 
   return (
     <>
@@ -88,7 +88,7 @@ const Header = () => {
               ) : (
                 <>
                   {/* Botões com estilos consistentes */}
-                  <button onClick={openCadastroModal} className="font-semibold text-gray-300 hover:text-orange-500 transition-colors">
+                  <button onClick={openCadastroModal} className="font-semibold text-gray-300 hover:text-orange-500 transition-colors cursor-pointer">
                     Cadastre-se
                   </button>
                   <button onClick={openLoginModal} className={primaryButtonClasses}>
