@@ -2,6 +2,8 @@ import express from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { readJSON, writeJSON } from "../utils/fileHandler.js"
+// ALTERAÇÃO: Importamos o middleware de autenticação
+import { authenticateToken } from "../middleware/auth.js"
 
 const router = express.Router()
 
@@ -81,4 +83,27 @@ router.post("/login", async (req, res) => {
   }
 })
 
+// ALTERAÇÃO: Nova rota para verificar o token
+router.get("/verify", authenticateToken, async (req, res) => {
+  try {
+    // Se o código chegou aqui, o token é válido.
+    // O middleware já colocou o id do utilizador em req.user
+    const usuarios = await readJSON("usuario.json")
+    const user = usuarios.find((u) => u.id === req.user.id)
+
+    if (!user) {
+      return res.status(404).json({ error: "Utilizador associado ao token não encontrado" })
+    }
+
+    res.json({
+      message: "Token válido",
+      user: { id: user.id, nome: user.nome, email: user.email },
+    })
+  } catch (error) {
+    console.error("ERRO NA VERIFICAÇÃO:", error)
+    res.status(500).json({ error: "Erro interno do servidor ao verificar token" })
+  }
+})
+
 export default router
+
